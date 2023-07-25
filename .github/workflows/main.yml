@@ -10,4 +10,4 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: display message
-      run: echo " Hi Vishwanath, Hello mam 21"
+      run: echo " Hi Vishwanath, Hello mam yes"
