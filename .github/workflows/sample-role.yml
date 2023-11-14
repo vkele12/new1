@@ -27,12 +27,22 @@ jobs:
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_wrapper: false
+        env:
+          TF_VAR_1: ${{ github.event.inputs.role_name }}  
 
       - name: Initialize Terraform
-        run: terraform init
+        run: |
+         cd ./
+          
+          export TF_BACKEND_KEY="deployment_roles/${TF_VAR_1}/user-management-deployment-role/terraform.tfstate"
+          
+          
+          terraform init \
+            -backend-config="key=${TF_BACKEND_KEY}" 
 
       - name: Deploy IAM Role
         run: |
+         
           terraform apply -auto-approve -var "role_name=${{ github.event.inputs.role_name }}"
 
       - name: Show Role ARN
